@@ -60,7 +60,7 @@ function onSuccess(position){
 }
 function geo(){
   $("#geolocation").html("Esperando al GPS");
-  navigator.geolocation.getCurrentPosition(onSuccess, onError);
+  var nav = navigator.geolocation.getCurrentPosition(onSuccess, onError);
 }
 
 
@@ -75,7 +75,7 @@ function initMap() {
                 var Longitud = position.coords.longitude ;
                 var Latitud = position.coords.latitude ;
                 var latLong = new google.maps.LatLng(Latitud, Longitud);
-                map = new google.maps.Map(document.getElementById('map'), {
+                var map = new google.maps.Map(document.getElementById('map'), {
                   center: latLong,
                   zoom: 16,
                   mapTypeId: google.maps.MapTypeId.ROADMAP,
