@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var app = {
+/*var app = {
     // Application Constructor
     initialize: function() {
         this.bindEvents();
@@ -46,4 +46,56 @@ var app = {
 
         console.log('Received Event: ' + id);
     }
-};
+};*/
+
+function onSuccess(position){
+              $("#geolocation").html('Latitud: '           + position.coords.latitude          + '<br>' +
+              'Longitud: '         + position.coords.longitude         + '<br>' +
+              'Altitud: '          + position.coords.altitude          + '<br>' +
+              'Exactitud: '          + position.coords.accuracy          + '<br>' +
+              'Exactitud de Altura: ' + position.coords.altitudeAccuracy  + '<br>' +
+              'Titulo: '           + position.coords.heading           + '<br>' +
+              'Velocidad: '             + position.coords.speed             + '<br>' +
+              'Marca Temporal: '         + position.timestamp                + '<br>');
+}
+function geo(){
+  $("#geolocation").html("Esperando al GPS");
+  navigator.geolocation.getCurrentPosition(onSuccess, onError);
+}
+
+
+
+
+
+var map;
+function initMap() {
+  navigator.geolocation.getCurrentPosition(onInfo, onError);
+  function onInfo(position){
+
+                var Longitud = position.coords.longitude ;
+                var Latitud = position.coords.latitude ;
+                var latLong = new google.maps.LatLng(Latitud, Longitud);
+                map = new google.maps.Map(document.getElementById('map'), {
+                  center: latLong,
+                  zoom: 16,
+                  mapTypeId: google.maps.MapTypeId.ROADMAP,
+                  enableHighAccuracy: true
+                });
+
+                var marker = new google.maps.Marker({
+                      position: latLong,
+                      title: "Mi posición",
+                      animation: google.maps.Animation.DROP
+                  });
+
+                  marker.setMap(map);
+                  map.setZoom(16);
+                  map.setCenter(marker.getPosition());
+
+  }
+
+}
+function onError(error){
+              alert('code: '    + error.code    + '<br>' +
+              'message: ' + error.message + '\n');
+}
